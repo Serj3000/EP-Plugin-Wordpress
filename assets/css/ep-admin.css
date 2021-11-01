@@ -1,0 +1,29 @@
+h2.title-dp-plagin{
+    margin: 15px;
+    color: #000;
+    border: 5px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.wrapper-admin{
+    display: flex;
+    width: 98%;
+    margin: 10px auto;
+}
+
+.block-admin-one{
+    margin: 0 auto;
+    padding: 10px;
+    width: 48%;
+    background-color: #eaeaea;
+    color: #7c7c7c;
+}
+
+.block-admin-two{
+    margin: 0 auto;
+    padding: 10px;
+    width: 48%;
+    background-color: #eaeaea;
+    color: #7c7c7c;
+}

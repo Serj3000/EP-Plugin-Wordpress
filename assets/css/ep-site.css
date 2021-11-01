@@ -1,0 +1,52 @@
+/*
+    <div class="header-dp">
+        <a id="btn-dp" class="btn-ep" value="disabled_people" data-checked="">Людям з порушеннями зору</a>
+    </div>
+*/
+.header-ep{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.btn-ep{
+    width: 100%;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    background-color: #483d3d;
+    border-radius: 5px;
+}
+
+#ep-body-dark{
+    filter: grayscale(100%);
+}
+
+#ep-body-white{
+    filter: none;
+    color:transparent
+}
+
+.ep-body-dark{
+    filter: grayscale(100%);
+}
+
+.ep-body-white{
+    filter: none;
+}
+
+
+/* .font-paragraph-22{
+    font-size: 18px !important;
+    line-height: 20px !important;
+}
+
+.font-link-22{
+    font-size: 18px !important;
+    line-height: 20px !important;
+} */
