@@ -47,9 +47,11 @@ class EnableMonochrome
 
         add_settings_section('ep_monochrome_section_1', esc_html__('Settings 1','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
         add_settings_section('ep_monochrome_section_2', esc_html__('Settings 2','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
+        add_settings_section('ep_monochrome_section_3', esc_html__('Settings 3','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
 
         add_settings_field('posts_per_page_1', esc_html__('Posts per page 1','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_1');// Создает поле опции для указанной секции (указанного блока настроек).
         add_settings_field('posts_per_page_2', esc_html__('Posts per page 2','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_2');
+        add_settings_field('posts_per_page_3', esc_html__('Posts per page 3','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_3');
     }
 
     //Settings section html
@@ -59,11 +61,54 @@ class EnableMonochrome
 
     //Settings fields HTML
     public function posts_per_page_html(){
-        $options = get_option('ep_monochrome_options'); ?>
+        $ep_options = get_option('ep_monochrome_options'); 
+        $ep_widgets = get_option('widget_monochrome-widget-ep');
+        echo '<br>$ep_widgets[5]<br>';
+        print_r($ep_widgets[5]);
+        echo '<br><br>';
+        $first_ep_widgets=$ep_widgets[array_key_first($ep_widgets)];
+        echo '<br>$first_ep_widgets<br>';
+        print_r($first_ep_widgets);
 
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($options['posts_per_page_1']) ? $options['posts_per_page_1'] : "";  ?>" />111</p>
 
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($options['posts_per_page_2']) ? $options['posts_per_page_2'] : "";  ?>" />222</p>
+        $array_ep_options_default=[
+            'posts_per_page_1'=>'Для людей з порушенням зору',
+            'posts_per_page_2'=>'Людям з порушеннями зору',
+            'posts_per_page_3'=>'Звичайний режим',
+            ];
+            
+        if(empty(get_option('widget_monochrome-widget-ep'))){
+            $ep_option_1=$array_ep_options_default['posts_per_page_1'];
+            $ep_option_2=$array_ep_options_default['posts_per_page_2'];
+            $ep_option_3=$array_ep_options_default['posts_per_page_3'];
+        }
+        elseif(!empty(get_option('widget_monochrome-widget-ep'))){
+            echo '<br> wp_options: widget_monochrome-widget-ep <br>';
+            echo '<br>$ep_widgets<br>';
+			if(is_array($first_ep_widgets)){
+                echo '<br>массив<br>';
+                print_r($first_ep_widgets);
+                $ep_option_1=$first_ep_widgets['title_header'];
+                $ep_option_2=$first_ep_widgets['title_link_on'];
+                $ep_option_3=$first_ep_widgets['title_link_off'];
+			}
+			else{
+                echo '<br>не массив<br>';
+				print_r($first_ep_widgets); 
+			} 
+            echo '<br>значения массива<br>';
+            echo $ep_option_1;
+            echo $ep_option_2;
+            echo $ep_option_3;
+
+		echo '<br> =============== <br>';
+        } ?>
+
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />111</p>
+
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />222</p>
+
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php echo isset($ep_options['posts_per_page_3']) ? $ep_options['posts_per_page_3'] : ""; ?>" />333</p>
     <?php }
 
     //Создаем метод для подключения файлов css и js

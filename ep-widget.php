@@ -112,10 +112,11 @@ class MonochromeWidgetEP extends WP_Widget
 	 */
 	public function form( $instance ) {
 		wp_nonce_field('enplagmonoNonce', '_id_enplagmono');
+		$ep_options_plugin = get_option('ep_monochrome_options');
 
-		$title=!empty( $instance['title_header'] ) ? $instance['title_header'] : '';
-		$title_link_on=!empty($instance['title_link_on']) ? $instance['title_link_on'] : $this->default_options['title_link_on'];
-		$title_link_off=!empty($instance['title_link_off']) ? $instance['title_link_off'] : $this->default_options['title_link_off'];
+		$title=!empty( $instance['title_header'] ) ? $instance['title_header'] : $ep_options_plugin['posts_per_page_1'];
+		$title_link_on=!empty($instance['title_link_on']) ? $instance['title_link_on'] : $ep_options_plugin['posts_per_page_2'];
+		$title_link_off=!empty($instance['title_link_off']) ? $instance['title_link_off'] : $ep_options_plugin['posts_per_page_3'];
 		?>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title_header' ) ); ?>">Заголовок вiджиту:</label>
@@ -137,6 +138,24 @@ class MonochromeWidgetEP extends WP_Widget
 			<a href="#<?php //echo get_admin_url( false, 'ep-admin.php?page=ep-admin' ); ?>" class="page-title-action">Изменить цвет ссылки</a>
 		</p>
 		<?php
+
+		$options_p = get_option('ep_monochrome_options');
+		echo '<br> wp_options: ep_monochrome_options <br>';
+			print_r($options_p);
+		echo '<br> =============== <br>';
+
+		$options_w = get_option('widget_monochrome-widget-ep');
+		echo '<br> wp_options: widget_monochrome-widget-ep <br>';
+			if(is_array($options_w)){
+				foreach($options_w as $valu_option){
+					print_r($valu_option);
+				}
+			}
+			else{
+				print_r($options_w); 
+			} 
+
+		echo '<br> =============== <br>';
 
 		_e($this->id_base);
 
