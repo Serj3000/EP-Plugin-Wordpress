@@ -41,3 +41,20 @@ class EpDb
         $this->row=$row;
     }
 }
+//=======================
+// public $ep_widget;
+//
+// require_once plugin_dir_path( __FILE__ ).'ep-db.php';
+// if(class_exists('EpDb')){
+//     $ep_widget=new EpDb('ep_monochrome_options');
+//     $this->ep_widget=$ep_widget;
+// }
+
+// echo '<br> =============== <br>';
+
+// _e($this->id_base);
+
+// echo '<br>======= $row =======<br>';
+// print_r($this->ep_widget->row);
+// echo '<br> unserialize <br>';
+// print_r(unserialize($this->ep_widget->row['option_value']));

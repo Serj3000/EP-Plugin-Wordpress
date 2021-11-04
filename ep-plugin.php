@@ -63,47 +63,29 @@ class EnableMonochrome
     public function posts_per_page_html(){
         $ep_options = get_option('ep_monochrome_options'); 
         $ep_widgets = get_option('widget_monochrome-widget-ep');
-        echo '<br>$ep_widgets[5]<br>';
-        print_r($ep_widgets[5]);
-        echo '<br><br>';
-        $first_ep_widgets=$ep_widgets[array_key_first($ep_widgets)];
-        echo '<br>$first_ep_widgets<br>';
-        print_r($first_ep_widgets);
-
+        foreach($ep_widgets as $key_ep_widgets=>$value_ep_widgets){
+            $last_ep_widget[$key_ep_widgets]=$value_ep_widgets;
+        }
+        array_pop($last_ep_widget);
+        // $first_ep_widgets=$ep_widgets[array_key_first($ep_widgets)];
 
         $array_ep_options_default=[
             'posts_per_page_1'=>'Для людей з порушенням зору',
             'posts_per_page_2'=>'Людям з порушеннями зору',
             'posts_per_page_3'=>'Звичайний режим',
-            ];
-            
-        if(empty(get_option('widget_monochrome-widget-ep'))){
-            $ep_option_1=$array_ep_options_default['posts_per_page_1'];
-            $ep_option_2=$array_ep_options_default['posts_per_page_2'];
-            $ep_option_3=$array_ep_options_default['posts_per_page_3'];
-        }
-        elseif(!empty(get_option('widget_monochrome-widget-ep'))){
-            echo '<br> wp_options: widget_monochrome-widget-ep <br>';
-            echo '<br>$ep_widgets<br>';
-			if(is_array($first_ep_widgets)){
-                echo '<br>массив<br>';
-                print_r($first_ep_widgets);
-                $ep_option_1=$first_ep_widgets['title_header'];
-                $ep_option_2=$first_ep_widgets['title_link_on'];
-                $ep_option_3=$first_ep_widgets['title_link_off'];
-			}
-			else{
-                echo '<br>не массив<br>';
-				print_r($first_ep_widgets); 
-			} 
-            echo '<br>значения массива<br>';
-            echo $ep_option_1;
-            echo $ep_option_2;
-            echo $ep_option_3;
+        ];
 
-		echo '<br> =============== <br>';
-        } ?>
+            // $ep_option_1=$last_ep_widget['title_header'];
+            // $ep_option_2=$last_ep_widget['title_link_on'];
+            // $ep_option_3=$last_ep_widget['title_link_off'];
 
+		echo '<br> =======$ep_options======= <br>';
+        print_r($ep_options);
+        echo '<br> =======$ep_widgets======= <br>';
+        print_r($ep_widgets);
+        echo '<br> =======$last_ep_widget======= <br>';
+        print_r($last_ep_widget);
+        ?>
         <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />111</p>
 
         <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />222</p>
