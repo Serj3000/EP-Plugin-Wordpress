@@ -52,6 +52,8 @@ class EnableMonochrome
         add_settings_field('posts_per_page_1', esc_html__('Posts per page 1','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_1');// Создает поле опции для указанной секции (указанного блока настроек).
         add_settings_field('posts_per_page_2', esc_html__('Posts per page 2','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_2');
         add_settings_field('posts_per_page_3', esc_html__('Posts per page 3','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_3');
+
+        // delete_option('widget_monochrome-widget-ep');
     }
 
     //Settings section html
@@ -75,22 +77,61 @@ class EnableMonochrome
             'posts_per_page_3'=>'Звичайний режим',
         ];
 
-            // $ep_option_1=$last_ep_widget['title_header'];
-            // $ep_option_2=$last_ep_widget['title_link_on'];
-            // $ep_option_3=$last_ep_widget['title_link_off'];
-
 		echo '<br> =======$ep_options======= <br>';
         print_r($ep_options);
         echo '<br> =======$ep_widgets======= <br>';
         print_r($ep_widgets);
         echo '<br> =======$last_ep_widget======= <br>';
         print_r($last_ep_widget);
+
+        $first_ep_widget=array_shift($last_ep_widget);
+
+        // is_active_widget( ) - Определяет отображается ли указанный виджет на сайте (во фронтэнде). Получает ID панели, в которой виджет находится.
+		if ( is_active_widget(false, false, 'monochrome-widget-ep')){
+            if(!empty($first_ep_widget)){
+                $ep_option_1=$first_ep_widget['title_header'];
+                $ep_option_2=$first_ep_widget['title_link_on'];
+                $ep_option_3=$first_ep_widget['title_link_off'];
+
+                delete_option('widget_monochrome-widget-ep');
+            }
+            else{
+                $ep_option_1=$ep_options['posts_per_page_1'];
+                $ep_option_2=$ep_options['posts_per_page_2'];
+                $ep_option_3=$ep_options['posts_per_page_3'];
+            }
+
+            // echo '<br> =======$ep_option_1======= <br>';
+            // print_r($ep_option_1);
+            // echo '<br> =======$ep_option_2======= <br>';
+            // print_r($ep_option_2);
+            // echo '<br> =======$ep_option_3======= <br>';
+            // print_r($ep_option_3);
+        }
+        else{
+            $ep_option_1=$ep_options['posts_per_page_1'];
+            $ep_option_2=$ep_options['posts_per_page_2'];
+            $ep_option_3=$ep_options['posts_per_page_3'];
+        }
+            echo '<br> =======$ep_option_1======= <br>';
+            print_r($ep_option_1);
+            echo '<br> =======$ep_option_2======= <br>';
+            print_r($ep_option_2);
+            echo '<br> =======$ep_option_3======= <br>';
+            print_r($ep_option_3);
         ?>
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />111</p>
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($ep_option_1) ? $ep_option_1 : $array_ep_options_default['posts_per_page_1']; ?>" />111</p>
 
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />222</p>
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($ep_option_2) ? $ep_option_2 : $array_ep_options_default['posts_per_page_2']; ?>" />222</p>
 
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php echo isset($ep_options['posts_per_page_3']) ? $ep_options['posts_per_page_3'] : ""; ?>" />333</p>
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php echo isset($ep_option_3) ? $ep_option_3 : $array_ep_options_default['posts_per_page_3']; ?>" />333</p>
+
+
+                    <!-- <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php //echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />111</p>
+
+                    <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php //echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />222</p>
+ 
+                    <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php //echo isset($ep_options['posts_per_page_3']) ? $ep_options['posts_per_page_3'] : ""; ?>" />333</p> -->
     <?php }
 
     //Создаем метод для подключения файлов css и js
