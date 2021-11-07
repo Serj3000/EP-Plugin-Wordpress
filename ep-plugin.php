@@ -23,6 +23,19 @@ if(!function_exists('add_action')){
 // Класса EnableMonochrome.
 class EnableMonochrome
 {
+    public static $monochromeWidget;
+
+    function __construct(){
+        //======================  Start Widget  ===========================
+        // Инициализация класса Monochrome_Widget
+        require plugin_dir_path( __FILE__ ).'ep-widget.php';
+        if(class_exists('MonochromeWidgetEP')){
+            $monochromeWidget=new MonochromeWidgetEP();
+            self::$monochromeWidget=$monochromeWidget;
+        }
+        //=======================  End Widget  ============================
+    }
+
     function register(){
         add_action('get_header', array($this, 'enqueue_plugin'));
 
@@ -45,15 +58,22 @@ class EnableMonochrome
     public function settings_init(){
         register_setting('ep_monochrome','ep_monochrome_options');// Регистрирует новую опцию и callback функцию (функцию обратного вызова) для обработки значения опции при её сохранении в БД.
 
-        add_settings_section('ep_monochrome_section_1', esc_html__('Settings 1','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
-        add_settings_section('ep_monochrome_section_2', esc_html__('Settings 2','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
-        add_settings_section('ep_monochrome_section_3', esc_html__('Settings 3','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
+        for($i=1;$i<=3;$i++){
+            add_settings_section('ep_monochrome_section_'.$i, esc_html__('Settings '.$i,'enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
 
-        add_settings_field('posts_per_page_1', esc_html__('Posts per page 1','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_1');// Создает поле опции для указанной секции (указанного блока настроек).
-        add_settings_field('posts_per_page_2', esc_html__('Posts per page 2','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_2');
-        add_settings_field('posts_per_page_3', esc_html__('Posts per page 3','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_3');
+            add_settings_field('posts_per_page_'.$i, esc_html__('Posts per page '.$i,'enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_'.$i);// Создает поле опции для указанной секции (указанного блока настроек).
 
-        // delete_option('widget_monochrome-widget-ep');
+            //===============================================================
+                // add_settings_section('ep_monochrome_section_1', esc_html__('Settings 1','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
+                // add_settings_section('ep_monochrome_section_2', esc_html__('Settings 2','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
+                // add_settings_section('ep_monochrome_section_3', esc_html__('Settings 3','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
+
+                // add_settings_field('posts_per_page_1', esc_html__('Posts per page 1','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_1');// Создает поле опции для указанной секции (указанного блока настроек).
+                // add_settings_field('posts_per_page_2', esc_html__('Posts per page 2','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_2');
+                // add_settings_field('posts_per_page_3', esc_html__('Posts per page 3','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_3');
+
+                // //delete_option('widget_monochrome-widget-ep');
+        }
     }
 
     //Settings section html
@@ -63,13 +83,24 @@ class EnableMonochrome
 
     //Settings fields HTML
     public function posts_per_page_html(){
-        $ep_options = get_option('ep_monochrome_options'); 
+
+        $ep_options = get_option('ep_monochrome_options');
         $ep_widgets = get_option('widget_monochrome-widget-ep');
         foreach($ep_widgets as $key_ep_widgets=>$value_ep_widgets){
             $last_ep_widget[$key_ep_widgets]=$value_ep_widgets;
         }
         array_pop($last_ep_widget);
         // $first_ep_widgets=$ep_widgets[array_key_first($ep_widgets)];
+
+        $first_ep_widget=array_shift($last_ep_widget);
+
+        for($i=1;$i<=3;$i++){ ?>
+            <p><input type="text" name="ep_monochrome_options[posts_per_page_<?php echo $i; ?>]" value="<?php echo isset($ep_options['posts_per_page_'.$i]) ? $ep_options['posts_per_page_'.$i] : ""; ?>" /><?php echo $i; ?></p>
+        <?php }
+
+
+
+
 
         $array_ep_options_default=[
             'posts_per_page_1'=>'Для людей з порушенням зору',
@@ -84,7 +115,7 @@ class EnableMonochrome
         echo '<br> =======$last_ep_widget======= <br>';
         print_r($last_ep_widget);
 
-        $first_ep_widget=array_shift($last_ep_widget);
+        // $first_ep_widget=array_shift($last_ep_widget);
 
         // is_active_widget( ) - Определяет отображается ли указанный виджет на сайте (во фронтэнде). Получает ID панели, в которой виджет находится.
 		if ( is_active_widget(false, false, 'monochrome-widget-ep')){
@@ -93,7 +124,7 @@ class EnableMonochrome
                 $ep_option_2=$first_ep_widget['title_link_on'];
                 $ep_option_3=$first_ep_widget['title_link_off'];
 
-                delete_option('widget_monochrome-widget-ep');
+                // delete_option('widget_monochrome-widget-ep');
             }
             else{
                 $ep_option_1=$ep_options['posts_per_page_1'];
@@ -120,18 +151,18 @@ class EnableMonochrome
             echo '<br> =======$ep_option_3======= <br>';
             print_r($ep_option_3);
         ?>
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($ep_option_1) ? $ep_option_1 : $array_ep_options_default['posts_per_page_1']; ?>" />111</p>
+        <!-- <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php //echo isset($ep_option_1) ? $ep_option_1 : $array_ep_options_default['posts_per_page_1']; ?>" />111</p>
 
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($ep_option_2) ? $ep_option_2 : $array_ep_options_default['posts_per_page_2']; ?>" />222</p>
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php //echo isset($ep_option_2) ? $ep_option_2 : $array_ep_options_default['posts_per_page_2']; ?>" />222</p>
 
-        <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php echo isset($ep_option_3) ? $ep_option_3 : $array_ep_options_default['posts_per_page_3']; ?>" />333</p>
+        <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php //echo isset($ep_option_3) ? $ep_option_3 : $array_ep_options_default['posts_per_page_3']; ?>" />333</p> -->
 
 
-                    <!-- <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php //echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />111</p>
+                        <!-- <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php //echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />111</p>
 
-                    <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php //echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />222</p>
- 
-                    <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php //echo isset($ep_options['posts_per_page_3']) ? $ep_options['posts_per_page_3'] : ""; ?>" />333</p> -->
+                        <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php //echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />222</p>
+    
+                        <p><input type="text" name="ep_monochrome_options[posts_per_page_3]" value="<?php //echo isset($ep_options['posts_per_page_3']) ? $ep_options['posts_per_page_3'] : ""; ?>" />333</p> -->
     <?php }
 
     //Создаем метод для подключения файлов css и js
@@ -206,9 +237,9 @@ function enplagmono_load_plugin_textdomain(){
 add_action('plagins_loaded', 'db_load_plugin_textdomain');
 
 // Функция, которая выводит контент в админке при выборе в меню EP Plugin
-function enplagmono_show_content(){
+function enplagmono_show_content($obj_archive_post){
     _e('<h2 class="title-dp-plagin">Welcome to the plugin "Enable Plugin Monochrome" options settings</h2>','db');
-
+    $monochromeWidget=EnableMonochrome::$monochromeWidget;
     require_once plugin_dir_path(__FILE__).'ep-admin.php';
 }
 
@@ -241,15 +272,15 @@ function enqueue_load_admin($hook){
 }
 add_action('admin_enqueue_scripts', 'enqueue_load_admin');
 
-//======================  Start Widget  ===========================
-// Инициализация класса Monochrome_Widget
-require plugin_dir_path( __FILE__ ).'ep-widget.php';
+// //======================  Start Widget  ===========================
+// // Инициализация класса Monochrome_Widget
+// require plugin_dir_path( __FILE__ ).'ep-widget.php';
 
-if(class_exists('MonochromeWidgetEP')){
-    // new Monochrome_Widget();
-    new MonochromeWidgetEP();
-}
-//=======================  End Widget  ============================
+// if(class_exists('MonochromeWidgetEP')){
+//     // new Monochrome_Widget();
+//     $monochromeWidget=new MonochromeWidgetEP();
+// }
+// //=======================  End Widget  ============================
 
 //======================  Start DB  ===========================
 // Инициализация класса Monochrome_Widget

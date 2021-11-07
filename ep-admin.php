@@ -58,12 +58,28 @@ if(class_exists('EpDb')){
 <body>
     <div class="wrapper-admin">
         <div class="block-admin-one">
+
+            <?php
+                $ep_widgets = get_option('widget_monochrome-widget-ep');
+                foreach($ep_widgets as $key_ep_widgets=>$value_ep_widgets){
+                    $last_ep_widget[$key_ep_widgets]=$value_ep_widgets;
+                }
+                array_pop($last_ep_widget);
+                // $first_ep_widgets=$ep_widgets[array_key_first($ep_widgets)];
+
+                $first_ep_widget=array_shift($last_ep_widget);
+            ?>
+            <p class="text"><pre><?php
+                echo '<br>$first_ep_widget<br>';
+                print_r($first_ep_widget); 
+            ?></pre></p>
+
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla labore asperiores sit nisi at deleniti accusamus corporis accusantium commodi voluptate vel nihil nemo earum eum odit sint, similique pariatur id.</p>
             <p class="text">Dolore, expedita sint. Odio voluptatum itaque at ex adipisci rem illo ab? Mollitia totam sit corporis est placeat quisquam. Eligendi dignissimos quaerat ducimus autem architecto reiciendis perferendis, exercitationem sapiente est.</p>
             <p class="text">Eos quidem fuga eligendi? Minima omnis debitis excepturi eum? Voluptate dignissimos, architecto blanditiis rerum ducimus ea impedit saepe aliquam! Magni corrupti dolorem autem mollitia sunt dolores fugit quasi, voluptatibus reiciendis?</p>
             <p class="text">Aperiam a ipsam molestiae? Placeat quia natus quis perspiciatis illum similique doloremque reiciendis dolores ad exercitationem? Libero iusto culpa suscipit. Excepturi facere at mollitia quia nisi deserunt dolore molestias numquam?</p>
-            <p class="text">Quibusdam nostrum amet excepturi id ad in ipsam quidem doloribus cumque at, nulla ipsum fugit ea iure expedita rem fugiat itaque vero impedit debitis saepe autem commodi tenetur voluptates! Ex!</p>
         </div>
+
         <div class="block-admin-two">
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi eum quidem saepe repellat laudantium fugiat magni, non iure veritatis ea blanditiis odit adipisci ut delectus eius modi libero itaque? Omnis.</p>
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat ipsam obcaecati quidem! Fugiat delectus perspiciatis placeat facere repellat. Alias eligendi nulla vel asperiores praesentium velit nobis, eius error. Est, repellat.</p>
