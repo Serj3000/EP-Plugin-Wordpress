@@ -58,6 +58,17 @@ if(class_exists('EpDb')){
 <body>
     <div class="wrapper-admin">
         <div class="block-admin-one">
+            <h1 class="ep_title"><?php esc_html_e('EP Monochrome Settings','enplagmono'); ?></h1>
+            <?php settings_errors();//Выводит на экран сообщения (уведомления и ошибки) зарегистрированные функцией add_settings_error(). ?>
+            <div class="ep_content">
+                <form method="post" action="options.php">
+                    <?php 
+                        settings_fields('ep_monochrome');// Выводит скрытые поля формы на странице настроек (option_page, _wpnonce, ...).
+                        do_settings_sections('ep-admin');// Выводит на экран все блоки опций, относящиеся к указанной странице настроек в админ-панели.
+                        submit_button();// Выводит на экран кнопку submit с указанным текстом и классами.
+                    ?>
+                </form>
+            </div>
 
             <?php
                 $ep_widgets = get_option('widget_monochrome-widget-ep');
@@ -72,6 +83,7 @@ if(class_exists('EpDb')){
             <p class="text"><pre><?php
                 echo '<br>$first_ep_widget<br>';
                 print_r($first_ep_widget); 
+
             ?></pre></p>
 
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla labore asperiores sit nisi at deleniti accusamus corporis accusantium commodi voluptate vel nihil nemo earum eum odit sint, similique pariatur id.</p>
@@ -114,18 +126,6 @@ if(class_exists('EpDb')){
             ?></pre></p> 
         </div>
 
-    </div>
-
-    <h1 class="ep_title"><?php esc_html_e('EP Monochrome Settings','enplagmono'); ?></h1>
-    <?php settings_errors();//Выводит на экран сообщения (уведомления и ошибки) зарегистрированные функцией add_settings_error(). ?>
-    <div class="ep_content">
-        <form method="post" action="options.php">
-            <?php 
-                settings_fields('ep_monochrome');// Выводит скрытые поля формы на странице настроек (option_page, _wpnonce, ...).
-                do_settings_sections('ep-admin');// Выводит на экран все блоки опций, относящиеся к указанной странице настроек в админ-панели.
-                submit_button();// Выводит на экран кнопку submit с указанным текстом и классами.
-            ?>
-        </form>
     </div>
 </body>
 </html>

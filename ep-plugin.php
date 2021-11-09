@@ -58,19 +58,17 @@ class EnableMonochrome
     public function settings_init(){
         register_setting('ep_monochrome','ep_monochrome_options');// Регистрирует новую опцию и callback функцию (функцию обратного вызова) для обработки значения опции при её сохранении в БД.
 
-        for($i=1;$i<=3;$i++){
-            add_settings_section('ep_monochrome_section_'.$i, esc_html__('Settings '.$i,'enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
+        add_settings_section('ep_monochrome_section', esc_html__('Settings ', 'enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
 
-            add_settings_field('posts_per_page_'.$i, esc_html__('Posts per page '.$i,'enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_'.$i);// Создает поле опции для указанной секции (указанного блока настроек).
+        for($i=1;$i<=3;$i++){
+            // add_settings_section('ep_monochrome_section_'.$i, esc_html__('Settings '.$i, 'enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
+
+            add_settings_field('posts_per_page_'.$i, esc_html__('Posts per page '.$i, 'enplagmono'), [$this, 'posts_per_page_html_'.$i], 'ep-admin', 'ep_monochrome_section');// Создает поле опции для указанной секции (указанного блока настроек).
 
             //===============================================================
                 // add_settings_section('ep_monochrome_section_1', esc_html__('Settings 1','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');// Создает новый блок (секцию), в котором выводятся поля настроек. Т.е. в этот блок затем добавляются опции, с помощью add_settings_field()
-                // add_settings_section('ep_monochrome_section_2', esc_html__('Settings 2','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
-                // add_settings_section('ep_monochrome_section_3', esc_html__('Settings 3','enplagmono'), [$this, 'settings_section_html'], 'ep-admin');
 
                 // add_settings_field('posts_per_page_1', esc_html__('Posts per page 1','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_1');// Создает поле опции для указанной секции (указанного блока настроек).
-                // add_settings_field('posts_per_page_2', esc_html__('Posts per page 2','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_2');
-                // add_settings_field('posts_per_page_3', esc_html__('Posts per page 3','enplagmono'), [$this, 'posts_per_page_html'], 'ep-admin', 'ep_monochrome_section_3');
 
                 // //delete_option('widget_monochrome-widget-ep');
         }
@@ -82,7 +80,21 @@ class EnableMonochrome
     }
 
     //Settings fields HTML
-    public function posts_per_page_html(){
+    public function posts_per_page_html_1(){
+        $ep_options = get_option('ep_monochrome_options');
+    ?>
+            <p><input type="text" name="ep_monochrome_options[posts_per_page_1]" value="<?php echo isset($ep_options['posts_per_page_1']) ? $ep_options['posts_per_page_1'] : ""; ?>" />1</p>
+    
+    <?php }
+
+    public function posts_per_page_html_2(){
+        $ep_options = get_option('ep_monochrome_options');
+    ?>
+            <p><input type="text" name="ep_monochrome_options[posts_per_page_2]" value="<?php echo isset($ep_options['posts_per_page_2']) ? $ep_options['posts_per_page_2'] : ""; ?>" />2</p>
+    
+    <?php }
+
+    public function posts_per_page_html_3(){
 
         $ep_options = get_option('ep_monochrome_options');
         $ep_widgets = get_option('widget_monochrome-widget-ep');
