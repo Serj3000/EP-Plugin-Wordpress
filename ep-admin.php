@@ -65,26 +65,109 @@ if(class_exists('EpDb')){
                     <?php 
                         settings_fields('ep_monochrome');// Выводит скрытые поля формы на странице настроек (option_page, _wpnonce, ...).
                         do_settings_sections('ep-admin');// Выводит на экран все блоки опций, относящиеся к указанной странице настроек в админ-панели.
+                        do_settings_sections('ep-admin-2');
+                        do_settings_sections('ep-admin-3');
                         submit_button();// Выводит на экран кнопку submit с указанным текстом и классами.
                     ?>
                 </form>
             </div>
 
+            <div class="hr-wp-widget"></div>
+
             <?php
+            function adminWidget(){
                 $ep_widgets = get_option('widget_monochrome-widget-ep');
+
                 foreach($ep_widgets as $key_ep_widgets=>$value_ep_widgets){
                     $last_ep_widget[$key_ep_widgets]=$value_ep_widgets;
                 }
+
                 array_pop($last_ep_widget);
                 // $first_ep_widgets=$ep_widgets[array_key_first($ep_widgets)];
 
                 $first_ep_widget=array_shift($last_ep_widget);
-            ?>
-            <p class="text"><pre><?php
-                echo '<br>$first_ep_widget<br>';
-                print_r($first_ep_widget); 
 
+
+                                // $array_ep_options_default=[
+                                //     'posts_per_page_1'=>'Для людей з порушенням зору',
+                                //     'posts_per_page_2'=>'Людям з порушеннями зору',
+                                //     'posts_per_page_3'=>'Звичайний режим',
+                                // ];
+                    
+                                // echo '<br> =======$ep_widgets======= <br>';
+                                // print_r($ep_widgets);
+                                // echo '<br> =======$last_ep_widget======= <br>';
+                                // print_r($last_ep_widget);
+                    
+                                // // $first_ep_widget=array_shift($last_ep_widget);
+                    
+                                // // is_active_widget( ) - Определяет отображается ли указанный виджет на сайте (во фронтэнде). Получает ID панели, в которой виджет находится.
+                                // if ( is_active_widget(false, false, 'monochrome-widget-ep')){
+                                //     if(!empty($first_ep_widget)){
+                                //         $ep_option_1=$first_ep_widget['title_header'];
+                                //         $ep_option_2=$first_ep_widget['title_link_on'];
+                                //         $ep_option_3=$first_ep_widget['title_link_off'];
+                    
+                                //         // delete_option('widget_monochrome-widget-ep');
+                                //     }
+                                //     else{
+                                //         $ep_option_1=$ep_options['posts_per_page_1'];
+                                //         $ep_option_2=$ep_options['posts_per_page_2'];
+                                //         $ep_option_3=$ep_options['posts_per_page_3'];
+                                //     }
+                    
+                                //     // echo '<br> =======$ep_option_1======= <br>';
+                                //     // print_r($ep_option_1);
+                                //     // echo '<br> =======$ep_option_2======= <br>';
+                                //     // print_r($ep_option_2);
+                                //     // echo '<br> =======$ep_option_3======= <br>';
+                                //     // print_r($ep_option_3);
+                                // }
+                                // else{
+                                //     $ep_option_1=$ep_options['posts_per_page_1'];
+                                //     $ep_option_2=$ep_options['posts_per_page_2'];
+                                //     $ep_option_3=$ep_options['posts_per_page_3'];
+                                // }
+
+                return $first_ep_widget;
+            }
+            ?>
+
+            <p style="font-size: 24px; font-weight: 600; color: #000;"><?php _e('Настройки виджета')?></p>
+
+            <p class="text"><pre><?php
+            
+                // is_active_widget( ) - Определяет отображается ли указанный виджет на сайте (во фронтэнде). Получает ID панели, в которой виджет находится.
+                if ( is_active_widget(false, false, 'monochrome-widget-ep')){
+                    // print_r(adminWidget());
+                    _e('<p class="form-table"><b>Заголовок вiджиту</b> ');
+                    _e(adminWidget()['title_header']);
+                    _e('</p>');
+
+                    _e('<p class="form-table"><b>Текс посилання до включення режиму</b> ');
+                    _e(adminWidget()['title_link_on']);
+                    _e('</p>');
+
+                    _e('<p class="form-table"><b>Текс посилання пiсля вимкнення режиму</b> ');
+                    _e(adminWidget()['title_link_off']);
+                    _e('</p>');
+                    ?>
+                    <input type="hidden" name="title_header" class="title_header" value="<?php _e(adminWidget()['title_header']) ?>">
+                    <input type="hidden" name="title_link_on" class="title_link_on" value="<?php _e(adminWidget()['title_link_on']) ?>">
+                    <input type="hidden" name="title_link_off" class="title_link_off" value="<?php _e(adminWidget()['title_link_off']) ?>">
+
+                        <p class="text-script-1"></p>
+                        <p class="text-script-2"></p>
+                        <p class="text-script-3"></p>
+
+                    <?php
+                }
+                else{
+                    _e('Виджет не активирован');
+                }
             ?></pre></p>
+
+            <div class="hr-wp-widget"></div>
 
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla labore asperiores sit nisi at deleniti accusamus corporis accusantium commodi voluptate vel nihil nemo earum eum odit sint, similique pariatur id.</p>
             <p class="text">Dolore, expedita sint. Odio voluptatum itaque at ex adipisci rem illo ab? Mollitia totam sit corporis est placeat quisquam. Eligendi dignissimos quaerat ducimus autem architecto reiciendis perferendis, exercitationem sapiente est.</p>
@@ -127,5 +210,42 @@ if(class_exists('EpDb')){
         </div>
 
     </div>
+    <script>
+        const widget_1=document.querySelector('.title_header');
+        const widget_2=document.querySelector('.title_link_on');
+        const widget_3=document.querySelector('.title_link_off');
+
+        const textScript_1=document.querySelector('.text-script-1');
+        const textScript_2=document.querySelector('.text-script-2');
+        const textScript_3=document.querySelector('.text-script-3');
+
+        textScript_1.innerText=widget_1.value;
+        textScript_2.innerText=widget_2.value;
+        textScript_3.innerText=widget_3.value;
+    </script>
+
+    <!-- <script>
+        const textScript_1=document.querySelector('.text-script-1');
+        const textScript_2=document.querySelector('.text-script-2');
+        const textScript_3=document.querySelector('.text-script-3');
+
+        const posts_per_page_1=document.querySelector('.posts_per_page_1');
+        const posts_per_page_2=document.querySelector('.posts_per_page_2');
+        const posts_per_page_3=document.querySelector('.posts_per_page_3');
+
+        const widget_1=document.querySelector('.widget-1');
+        const widget_2=document.querySelector('.widget-2');
+        const widget_3=document.querySelector('.widget-3');
+
+        // textScript_1.innerText=posts_per_page_1.value;
+        // textScript_2.innerText=posts_per_page_2.value;
+        // textScript_3.innerText=posts_per_page_3.value;
+
+        textScript_1.innerText=widget_1.value;
+        textScript_2.innerText=widget_2.value;
+        textScript_3.innerText=widget_3.value;
+
+    </script> -->
+    
 </body>
 </html>

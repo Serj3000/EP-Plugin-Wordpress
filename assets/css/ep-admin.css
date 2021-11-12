@@ -27,3 +27,9 @@ h2.title-dp-plagin{
     background-color: #eaeaea;
     color: #7c7c7c;
 }
+
+.hr-wp-widget{
+    display: block;
+    margin: 20px auto;
+    border-top: 2px solid #7c7c7c;
+}
