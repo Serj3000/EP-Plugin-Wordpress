@@ -1,6 +1,14 @@
 'use strict';
 window.onload = function(){
 
+  const widget_1=document.querySelector('.title_header');
+  const widget_2=document.querySelector('.title_link_on');
+  const widget_3=document.querySelector('.title_link_off');
+
+  const textScript_1=document.querySelector('.text-script-1');
+  const textScript_2=document.querySelector('.text-script-2');
+  const textScript_3=document.querySelector('.text-script-3');
+
   // const urlDp = new URL(window.location.href);
 
   const headerTag = document.head;
@@ -35,14 +43,14 @@ window.onload = function(){
         case 'dark':
             // Ссылка на темную тему
             aTagDp[i].setAttribute('data-checked', 'false');
-            aTagDp[i].innerText='Звичайний режим';
+            aTagDp[i].innerText=widget_3.value; //'Звичайний режим';
 
             bodesTag.className=`ep-body-dark ${bodyOldClass}`;
           break;
         case 'light':
             // Ссылка на светлую тему
             aTagDp[i].setAttribute('data-checked', 'true');
-            aTagDp[i].innerText='Людям з порушеннями зору';
+            aTagDp[i].innerText=widget_2.value; //'Людям з порушеннями зору';
             localStorage.removeItem('MonochromStyle');
 
             bodesTag.className=`ep-body-white ${bodyOldClass}`;
@@ -50,7 +58,7 @@ window.onload = function(){
         default:
             // Ссылка на светлую тему
             aTagDp[i].setAttribute('data-checked', 'true');
-            aTagDp[i].innerText='Людям з порушеннями зору';
+            aTagDp[i].innerText=widget_2.value; //'Людям з порушеннями зору';
 
             bodesTag.className=`ep-body-white ${bodyOldClass}`;
           break;

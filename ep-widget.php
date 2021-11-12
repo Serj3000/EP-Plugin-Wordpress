@@ -183,7 +183,25 @@ class MonochromeWidgetEP extends WP_Widget
 			_e(mb_strtoupper(strip_tags($instance['title_header'])), 'enplagmono');
 			_e('</div>');
 		}
-		?>
+
+		function optionWidget(){
+                $ep_widgets1 = get_option('widget_monochrome-widget-ep');
+
+                foreach($ep_widgets1 as $key_ep_widgets1=>$value_ep_widgets1){
+                    $last_ep_widget1[$key_ep_widgets1]=$value_ep_widgets1;
+                }
+
+                array_pop($last_ep_widget1);
+                $first_ep_widget1=array_shift($last_ep_widget1);
+
+                return $first_ep_widget1;
+            }
+        ?>
+
+			<input type="hidden" name="title_header" class="title_header" value="<?php _e(optionWidget()['title_header']) ?>">
+			<input type="hidden" name="title_link_on" class="title_link_on" value="<?php _e(optionWidget()['title_link_on']) ?>">
+			<input type="hidden" name="title_link_off" class="title_link_off" value="<?php _e(optionWidget()['title_link_off']) ?>">
+
 		<div class="header-ep btn-ep-widget"></div>
 
 		<?php
