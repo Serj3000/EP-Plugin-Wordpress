@@ -196,11 +196,13 @@ class MonochromeWidgetEP extends WP_Widget
 
                 return $first_ep_widget1;
             }
-        ?>
 
-			<input type="hidden" name="title_header" class="title_header" value="<?php _e(optionWidget()['title_header']) ?>">
-			<input type="hidden" name="title_link_on" class="title_link_on" value="<?php _e(optionWidget()['title_link_on']) ?>">
-			<input type="hidden" name="title_link_off" class="title_link_off" value="<?php _e(optionWidget()['title_link_off']) ?>">
+		if ( is_active_widget(false, false, 'monochrome-widget-ep')){
+		?>
+			<input type="hidden" name="title_header_1s" class="title_header_1s" value="<?php _e(optionWidget()['title_header']) ?>">
+			<input type="hidden" name="title_link_on_1s" class="title_link_on_1s" value="<?php _e(optionWidget()['title_link_on']) ?>">
+			<input type="hidden" name="title_link_off_1s" class="title_link_off_1s" value="<?php _e(optionWidget()['title_link_off']) ?>">
+		<?php } ?>
 
 		<div class="header-ep btn-ep-widget"></div>
 

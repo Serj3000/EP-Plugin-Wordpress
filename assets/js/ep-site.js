@@ -1,13 +1,18 @@
 'use strict';
 window.onload = function(){
 
-  const widget_1=document.querySelector('.title_header');
-  const widget_2=document.querySelector('.title_link_on');
-  const widget_3=document.querySelector('.title_link_off');
+  const widget_1s=document.querySelector('.title_header_1s');
+  const widget_2s=document.querySelector('.title_link_on_1s');
+  const widget_3s=document.querySelector('.title_link_off_1s');
 
-  const textScript_1=document.querySelector('.text-script-1');
-  const textScript_2=document.querySelector('.text-script-2');
-  const textScript_3=document.querySelector('.text-script-3');
+  if(typeof(ep_object_options) != "undefined" && variable !== null){
+    alert(ep_object_options.ep_options.posts_per_page_1);
+  }
+  
+  if(typeof(ep_object_widgets) != "undefined" && variable !== null){
+    alert(ep_object_widgets.ep_widgets.title_header);
+  }
+
 
   // const urlDp = new URL(window.location.href);
 
@@ -43,14 +48,14 @@ window.onload = function(){
         case 'dark':
             // Ссылка на темную тему
             aTagDp[i].setAttribute('data-checked', 'false');
-            aTagDp[i].innerText=widget_3.value; //'Звичайний режим';
+            aTagDp[i].innerText=widget_3s.value; //'Звичайний режим';
 
             bodesTag.className=`ep-body-dark ${bodyOldClass}`;
           break;
         case 'light':
             // Ссылка на светлую тему
             aTagDp[i].setAttribute('data-checked', 'true');
-            aTagDp[i].innerText=widget_2.value; //'Людям з порушеннями зору';
+            aTagDp[i].innerText=widget_2s.value; //'Людям з порушеннями зору';
             localStorage.removeItem('MonochromStyle');
 
             bodesTag.className=`ep-body-white ${bodyOldClass}`;
@@ -58,7 +63,7 @@ window.onload = function(){
         default:
             // Ссылка на светлую тему
             aTagDp[i].setAttribute('data-checked', 'true');
-            aTagDp[i].innerText=widget_2.value; //'Людям з порушеннями зору';
+            aTagDp[i].innerText=widget_2s.value; //'Людям з порушеннями зору';
 
             bodesTag.className=`ep-body-white ${bodyOldClass}`;
           break;

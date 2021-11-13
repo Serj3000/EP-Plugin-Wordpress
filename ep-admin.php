@@ -139,7 +139,9 @@ if(class_exists('EpDb')){
             
                 // is_active_widget( ) - Определяет отображается ли указанный виджет на сайте (во фронтэнде). Получает ID панели, в которой виджет находится.
                 if ( is_active_widget(false, false, 'monochrome-widget-ep')){
+
                     // print_r(adminWidget());
+
                     _e('<p class="form-table"><b>Заголовок вiджиту</b> ');
                     _e(adminWidget()['title_header']);
                     _e('</p>');
@@ -152,9 +154,9 @@ if(class_exists('EpDb')){
                     _e(adminWidget()['title_link_off']);
                     _e('</p>');
                     ?>
-                    <input type="hidden" name="title_header" class="title_header" value="<?php _e(adminWidget()['title_header']) ?>">
-                    <input type="hidden" name="title_link_on" class="title_link_on" value="<?php _e(adminWidget()['title_link_on']) ?>">
-                    <input type="hidden" name="title_link_off" class="title_link_off" value="<?php _e(adminWidget()['title_link_off']) ?>">
+                    <input type="hidden" name="title_header_admin" class="title_header_admin" value="<?php _e(adminWidget()['title_header']) ?>">
+                    <input type="hidden" name="title_link_on_admin" class="title_link_on_admin" value="<?php _e(adminWidget()['title_link_on']) ?>">
+                    <input type="hidden" name="title_link_off_admin" class="title_link_off_admin" value="<?php _e(adminWidget()['title_link_off']) ?>">
 
                         <p class="text-script-1"></p>
                         <p class="text-script-2"></p>
@@ -164,7 +166,14 @@ if(class_exists('EpDb')){
                 }
                 else{
                     _e('Виджет не активирован');
+                    _e(adminWidget());
                 }
+  
+                $widgetActive=adminWidget();
+                if(isset($widgetActive)){
+                    _e('OK'); 
+                }
+
             ?></pre></p>
 
             <div class="hr-wp-widget"></div>
@@ -211,17 +220,17 @@ if(class_exists('EpDb')){
 
     </div>
     <script>
-        const widget_1=document.querySelector('.title_header');
-        const widget_2=document.querySelector('.title_link_on');
-        const widget_3=document.querySelector('.title_link_off');
+        const widget_admin_1=document.querySelector('.title_header_admin');
+        const widget_admin_2=document.querySelector('.title_link_on_admin');
+        const widget_admin_3=document.querySelector('.title_link_off_admin');
 
         const textScript_1=document.querySelector('.text-script-1');
         const textScript_2=document.querySelector('.text-script-2');
         const textScript_3=document.querySelector('.text-script-3');
 
-        textScript_1.innerText=widget_1.value;
-        textScript_2.innerText=widget_2.value;
-        textScript_3.innerText=widget_3.value;
+        textScript_1.innerText=widget_admin_1.value;
+        textScript_2.innerText=widget_admin_2.value;
+        textScript_3.innerText=widget_admin_3.value;
     </script>
 
     <!-- <script>

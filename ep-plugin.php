@@ -44,6 +44,28 @@ class EnableMonochrome
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), [$this, 'add_plugin_setting_links']);
 
         add_action('admin_init', [$this, 'settings_init']);
+
+        //Вставка глобальных javascript данных перед рабочим скриптом 'enplagmono-plugin-script'
+        //(<script id="enplagmono-plugin-script-js-extra"></script>)
+        add_action( 'wp_enqueue_scripts', [$this, 'action_ep_wonochrome']);
+    }
+
+    //Функция вставки глобальных javascript данных перед рабочим скриптом 'enplagmono-plugin-script'
+    function action_ep_wonochrome(){
+        $ep_options = get_option('ep_monochrome_options');
+        wp_localize_script('enplagmono-plugin-script', 'ep_object_options', //(<script id="enplagmono-plugin-script-js-extra"></script>)
+                            array('ep_options' => $ep_options)
+        );
+
+        $ep_widgets = get_option('widget_monochrome-widget-ep');
+            foreach($ep_widgets as $key_ep_widgets=>$value_ep_widgets){
+                $last_ep_widget[$key_ep_widgets]=$value_ep_widgets;
+            }
+            array_pop($last_ep_widget);
+            $first_ep_widget=array_shift($last_ep_widget);
+        wp_localize_script('enplagmono-plugin-script', 'ep_object_widgets', //(<script id="enplagmono-plugin-script-js-extra"></script>)
+                            array('ep_widgets' => $first_ep_widget)
+        );
     }
 
     // Функция для добавления в таблице плагинов в админ-панели ссылки Setting (Настройки)
