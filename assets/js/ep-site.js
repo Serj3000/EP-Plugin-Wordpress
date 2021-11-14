@@ -1,33 +1,52 @@
 'use strict';
 window.onload = function(){
 
-  const widget_1s=document.querySelector('.title_header_1s');
-  const widget_2s=document.querySelector('.title_link_on_1s');
-  const widget_3s=document.querySelector('.title_link_off_1s');
-
-  if(typeof(ep_object_options)!="undefined" && ep_object_options.ep_options!==null){
-    alert(ep_object_options.ep_options.posts_per_page_1);
-    alert(ep_object_widgets);
-  }
-  
-  if(typeof(ep_object_widgets)!="undefined" && ep_object_widgets.ep_widgets!==null){
-    alert(ep_object_widgets.ep_widgets.title_header);
-  }
-
-
   // const urlDp = new URL(window.location.href);
-
   const headerTag = document.head;
   const bodesTag = document.body;
   let bodyOldClass;
 
-  const btnDpPlug = document.querySelectorAll('.header-ep');
-  const aTagDp=[];
+  
+  // const widget_1s=document.querySelector('.title_header_1s');
+  // const widget_2s=document.querySelector('.title_link_on_1s');
+  // const widget_3s=document.querySelector('.title_link_off_1s');
 
+
+  let options_per_page_1=null;
+  let options_per_page_2=null;
+  let options_per_page_3=null;
+
+  if(ep_object_options.ep_options!==null){
+    options_per_page_1=ep_object_options.ep_options.posts_per_page_1;
+    options_per_page_2=ep_object_options.ep_options.posts_per_page_2;
+    options_per_page_3=ep_object_options.ep_options.posts_per_page_3;
+  }
+ 
+  let widget_title_header=null;
+  let widget_title_link_on=null;
+  let widget_title_link_off=null;
+
+  if(ep_object_widgets.ep_widgets!==null){
+    widget_title_header=ep_object_widgets.ep_widgets.title_header;
+    widget_title_link_on=ep_object_widgets.ep_widgets.title_link_on;
+    widget_title_link_off=ep_object_widgets.ep_widgets.title_link_off;
+  }
+
+
+  const aTagDp=[];
+  const btnDpPlug = document.querySelectorAll('.header-ep');
   for(let i=0; i<btnDpPlug.length; i++){
     aTagDp[i] = document.createElement('a');
     btnDpPlug[i].append(aTagDp[i]);
     btnDpPlug[i].addEventListener('click', btnDpMonochrom);
+  }
+
+  const aSideDp=[];
+  const sidebarDpPlug = document.querySelectorAll('.sidebar-ep');
+  for(let i=0; i<sidebarDpPlug.length; i++){
+    aSideDp[i] = document.createElement('a');
+    sidebarDpPlug[i].append(aSideDp[i]);
+    sidebarDpPlug[i].addEventListener('click', btnDpMonochrom);
   }
 
   (function(){
@@ -49,14 +68,14 @@ window.onload = function(){
         case 'dark':
             // Ссылка на темную тему
             aTagDp[i].setAttribute('data-checked', 'false');
-            aTagDp[i].innerText=widget_3s.value; //'Звичайний режим';
+            aTagDp[i].innerText=options_per_page_3; //widget_3s.value; //'Звичайний режим';
 
             bodesTag.className=`ep-body-dark ${bodyOldClass}`;
           break;
         case 'light':
             // Ссылка на светлую тему
             aTagDp[i].setAttribute('data-checked', 'true');
-            aTagDp[i].innerText=widget_2s.value; //'Людям з порушеннями зору';
+            aTagDp[i].innerText=options_per_page_2; //widget_2s.value; //'Людям з порушеннями зору';
             localStorage.removeItem('MonochromStyle');
 
             bodesTag.className=`ep-body-white ${bodyOldClass}`;
@@ -64,15 +83,48 @@ window.onload = function(){
         default:
             // Ссылка на светлую тему
             aTagDp[i].setAttribute('data-checked', 'true');
-            aTagDp[i].innerText=widget_2s.value; //'Людям з порушеннями зору';
+            aTagDp[i].innerText=options_per_page_2; //widget_2s.value; //'Людям з порушеннями зору';
 
             bodesTag.className=`ep-body-white ${bodyOldClass}`;
           break;
       }
     }
   }
-
   validMono();
+
+                function validMono_2(){
+                  // Проверка значения из localStorage. Если значение dark то будет темная тема
+                  for(let i=0; i<sidebarDpPlug.length; i++){
+                    aSideDp[i].className="btn-ep";
+                    aSideDp[i].value="enplagmono";
+
+                    switch(localStorage.getItem('MonochromStyle')){
+                      case 'dark':
+                          // Ссылка на темную тему
+                          aSideDp[i].setAttribute('data-checked', 'false');
+                          aSideDp[i].innerText=widget_title_link_off; //'Звичайний режим';
+
+                          bodesTag.className=`ep-body-dark ${bodyOldClass}`;
+                        break;
+                      case 'light':
+                          // Ссылка на светлую тему
+                          aSideDp[i].setAttribute('data-checked', 'true');
+                          aSideDp[i].innerText=widget_title_link_on; //'Людям з порушеннями зору';
+                          localStorage.removeItem('MonochromStyle');
+
+                          bodesTag.className=`ep-body-white ${bodyOldClass}`;
+                      break;  
+                      default:
+                          // Ссылка на светлую тему
+                          aSideDp[i].setAttribute('data-checked', 'true');
+                          aSideDp[i].innerText=widget_title_link_on; //'Людям з порушеннями зору';
+
+                          bodesTag.className=`ep-body-white ${bodyOldClass}`;
+                        break;
+                    }
+                  }
+                }
+                validMono_2();
 
   // Событие при нажатии кнопки
   // btnDpPlug.addEventListener('click', btnDpMonochrom);
@@ -95,6 +147,7 @@ window.onload = function(){
   }
 
     validMono();
+            validMono_2();
   }
 
 
