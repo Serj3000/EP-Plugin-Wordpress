@@ -1,14 +1,14 @@
 <?php
 /**
  * @package Enable Plugin Monochrome
- * @version 3.3.0
+ * @version 3.3.1
  */
 /*
 Plugin Name: Enable Plugin Monochrome
 Plugin URI: http://wordpress.org/plugins/#/
 Description: Плагин поможет организовать переключение темы вашего сайта в монохромный вариант отображения. При активации плагина, в панели администратора появится пункт меню EP Monochrome, в котором можно получить рекомендации по интеграции и настройке плагина.
 Author: Sergej Onischenko
-Version: 3.3.0
+Version: 3.3.1
 Author URI: http://#/
 License: GPLv2 or later
 Text Domain: enplagmono

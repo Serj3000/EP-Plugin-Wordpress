@@ -204,7 +204,8 @@ class MonochromeWidgetEP extends WP_Widget
 			<input type="hidden" name="title_link_off_1s" class="title_link_off_1s" value="<?php _e(optionWidget()['title_link_off']) ?>">
 		<?php } ?>
 
-		<div class="header-ep btn-ep-widget"></div>
+		<!-- <div class="header-ep btn-ep-widget"></div> -->
+		<div class="sidebar-ep btn-ep-widget"></div>
 
 		<?php
 		echo $args['after_widget'];

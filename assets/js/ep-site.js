@@ -5,11 +5,12 @@ window.onload = function(){
   const widget_2s=document.querySelector('.title_link_on_1s');
   const widget_3s=document.querySelector('.title_link_off_1s');
 
-  if(typeof(ep_object_options) != "undefined" && variable !== null){
+  if(typeof(ep_object_options)!="undefined" && ep_object_options.ep_options!==null){
     alert(ep_object_options.ep_options.posts_per_page_1);
+    alert(ep_object_widgets);
   }
   
-  if(typeof(ep_object_widgets) != "undefined" && variable !== null){
+  if(typeof(ep_object_widgets)!="undefined" && ep_object_widgets.ep_widgets!==null){
     alert(ep_object_widgets.ep_widgets.title_header);
   }
 
