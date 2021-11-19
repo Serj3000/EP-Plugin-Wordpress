@@ -61,8 +61,8 @@ class EnableMonochrome
             foreach($ep_widgets as $key_ep_widgets=>$value_ep_widgets){
                 $last_ep_widget[$key_ep_widgets]=$value_ep_widgets;
             }
-            array_pop($last_ep_widget);
-            $first_ep_widget=array_shift($last_ep_widget);
+        array_pop($last_ep_widget);
+        $first_ep_widget=array_shift($last_ep_widget);
         wp_localize_script('enplagmono-plugin-script', 'ep_object_widgets', //(<script id="enplagmono-plugin-script-js-extra"></script>)
                             array('ep_widgets' => $first_ep_widget)
         );
@@ -71,8 +71,9 @@ class EnableMonochrome
     // Функция для добавления в таблице плагинов в админ-панели ссылки Setting (Настройки)
     function add_plugin_setting_links($links){
         print_r($links);
-        $my_custome_link='<a href="admin.php?page=ep-admin">Настройки</a>';
-        array_push($links, $my_custome_link);
+        $my_custome_link_setting='<a href="admin.php?page=ep-admin">Настройки</a>';
+        $my_custome_link_widget='<a href="/wp-admin/widgets.php">Виджеты</a>';
+        array_push($links, $my_custome_link_setting, $my_custome_link_widget);
         return $links;
     }
 

@@ -153,7 +153,14 @@ if(class_exists('EpDb')){
                     _e('<p class="form-table"><b>Текс посилання пiсля вимкнення режиму</b> ');
                     _e(adminWidget()['title_link_off']);
                     _e('</p>');
+
+                    _e('<p class="form-table">');
+                    ?><form action="/wp-admin/widgets.php"><?php 
+                        submit_button(__('Перейти к настройкам Виджета'));// Выводит на экран кнопку submit с указанным текстом.
+                    ?></form><?php 
+                    _e('</p>');
                     ?>
+                    <!-- //Скрытые поля type="hidden"-->
                     <input type="hidden" name="title_header_admin" class="title_header_admin" value="<?php _e(adminWidget()['title_header']) ?>">
                     <input type="hidden" name="title_link_on_admin" class="title_link_on_admin" value="<?php _e(adminWidget()['title_link_on']) ?>">
                     <input type="hidden" name="title_link_off_admin" class="title_link_off_admin" value="<?php _e(adminWidget()['title_link_off']) ?>">

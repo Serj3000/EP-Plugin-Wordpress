@@ -19,27 +19,9 @@ class MonochromeWidgetEP extends WP_Widget
     );
 
 	public $default_options=[
-			'bviActive'         => 'false',
-			'bviScriptLocation' => 'false',
-			'bviTheme'          => 'white',
-			'bviFont'           => 'arial',
-			'bviFontSize'       => '16',
-			'bviLetterSpacing'  => 'normal',
-			'bviLineHeight'     => 'normal',
-			'bviImages'         => 'true',
-			'bviReload'         => 'false',
-			'bviSpeech'         => 'true',
-			'bviBuiltElements'  => 'true',
-			'bviPanelHide'      => 'false',
-			'bviPanelFixed'     => 'true',
-			'bviLang'           => 'ru-RU',
-			'bviLinkText'       => 'Версия сайта для слабовидящих',
-			'bviLinkColor'      => '#ffffff',
-			'bviLinkBg'         => '#e53935',
-			'enplagmonoLinkText'=> 'Версия сайта для слабовидящих',
-			'title_header'      => 'Для людей з порушеннями зору',
-			'title_link_on'     => 'Людям з порушеннями зору',
-			'title_link_off'    => 'Звичайний режим',
+			'w_title_header'      => 'Для людей з порушеннями зору',
+			'w_title_link_on'     => 'Людям з порушеннями зору',
+			'w_title_link_off'    => 'Звичайний режим',
 		];
 
 	function __construct() {
@@ -114,7 +96,7 @@ class MonochromeWidgetEP extends WP_Widget
 		wp_nonce_field('enplagmonoNonce', '_id_enplagmono');
 		$ep_options_plugin = get_option('ep_monochrome_options');
 
-		$title=!empty( $instance['title_header'] ) ? $instance['title_header'] : $ep_options_plugin['posts_per_page_1'];
+		$title=!empty( $instance['title_header'] ) ? $instance['title_header'] : $this->default_options['w_title_header'];
 		$title_link_on=!empty($instance['title_link_on']) ? $instance['title_link_on'] : $ep_options_plugin['posts_per_page_2'];
 		$title_link_off=!empty($instance['title_link_off']) ? $instance['title_link_off'] : $ep_options_plugin['posts_per_page_3'];
 		?>
@@ -122,17 +104,17 @@ class MonochromeWidgetEP extends WP_Widget
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title_header' ) ); ?>">Заголовок вiджиту:</label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title_header' ) ); ?>"
 					name="<?php echo esc_attr( $this->get_field_name( 'title_header' ) ); ?>" type="text"
-					value="<?php echo esc_attr( $title ); ?>" placeholder="<?php echo $this->default_options['title_header']; ?>">
+					value="<?php echo esc_attr( $title ); ?>" placeholder="<?php echo $this->default_options['w_title_header']; ?>">
 			
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title_link_on' ) ); ?>">Текс посилання до включення режиму:</label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title_link_on' ) ); ?>"
 					name="<?php echo esc_attr( $this->get_field_name( 'title_link_on' ) ); ?>" type="text"
-					value="<?php echo esc_attr( $title_link_on ); ?>" placeholder="<?php echo $this->default_options['title_link_on']; ?>">
+					value="<?php echo esc_attr( $title_link_on ); ?>" placeholder="<?php echo $this->default_options['w_title_link_on']; ?>">
 
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title_link_off' ) ); ?>">Текс посилання пiсля вимкнення режиму:</label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title_link_off' ) ); ?>"
 					name="<?php echo esc_attr( $this->get_field_name( 'title_link_off' ) ); ?>" type="text"
-					value="<?php echo esc_attr( $title_link_off ); ?>" placeholder="<?php echo $this->default_options['title_link_off']; ?>">
+					value="<?php echo esc_attr( $title_link_off ); ?>" placeholder="<?php echo $this->default_options['w_title_link_off']; ?>">
 		</p>
 		<p>
 			<a href="#<?php //echo get_admin_url( false, 'ep-admin.php?page=ep-admin' ); ?>" class="page-title-action">Изменить цвет ссылки</a>
@@ -185,16 +167,16 @@ class MonochromeWidgetEP extends WP_Widget
 		}
 
 		function optionWidget(){
-                $ep_widgets1 = get_option('widget_monochrome-widget-ep');
+                $ep_widgets_new = get_option('widget_monochrome-widget-ep');
 
-                foreach($ep_widgets1 as $key_ep_widgets1=>$value_ep_widgets1){
-                    $last_ep_widget1[$key_ep_widgets1]=$value_ep_widgets1;
+                foreach($ep_widgets_new as $key_ep_widgets_new=>$value_ep_widgets_new){
+                    $last_ep_widget_new[$key_ep_widgets_new]=$value_ep_widgets_new;
                 }
 
-                array_pop($last_ep_widget1);
-                $first_ep_widget1=array_shift($last_ep_widget1);
+                array_pop($last_ep_widget_new);
+                $first_ep_widget_new=array_shift($last_ep_widget_new);
 
-                return $first_ep_widget1;
+                return $first_ep_widget_new;
             }
 
 		if ( is_active_widget(false, false, 'monochrome-widget-ep')){
@@ -202,8 +184,9 @@ class MonochromeWidgetEP extends WP_Widget
 							<input type="hidden" name="title_header_1s" class="title_header_1s" value="<?php _e(optionWidget()['title_header']) ?>">
 							<input type="hidden" name="title_link_on_1s" class="title_link_on_1s" value="<?php _e(optionWidget()['title_link_on']) ?>">
 							<input type="hidden" name="title_link_off_1s" class="title_link_off_1s" value="<?php _e(optionWidget()['title_link_off']) ?>">
-
+			<center>
 			<div class="sidebar-ep btn-ep-widget"></div>
+			</center>
 		<?php } ?>
 
 		<!-- <div class="sidebar-ep btn-ep-widget"></div> -->
